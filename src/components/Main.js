@@ -1,6 +1,5 @@
 import React,{ Component } from 'react';
 import Header from './Header';
-import Footer from './Footer';
 import Center from './Center';
 class Main extends Component{
     render(){
@@ -8,7 +7,6 @@ class Main extends Component{
             <div>
                 <Header/>
                 <Center/>
-                <Footer/>
             </div>
         )
     }
