@@ -30,18 +30,23 @@ class Header extends Component{
                   className={this.state.cate==v.id?'active':''}>{v.name}</Link>
         ));
         return(
-            <div>
-                <div className="header">
-                    <Back/>
-                    <p>React新闻阅读</p>
-                    <img src={Logo} alt=""/>
-                </div>
                 <div className="header-title">
                     <div className="scroolY">{els}</div>
                 </div>
+        )
+    }
+}
+class Top extends Component{
+    render(){
+        return(
+            <div className="header">
+                <Back/>
+                <p>React新闻阅读</p>
+                <img src={Logo} alt=""/>
             </div>
         )
     }
 }
 
-export default Header;
+module.exports = {Top,Header};
+// export default Header;

@@ -1,5 +1,7 @@
 import React,{ Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route,Link } from 'react-router-dom';
+import {Header} from './Header';
+// 列表页
 class List extends Component{
     state={
         data:[]
@@ -15,7 +17,7 @@ class List extends Component{
         this.FetchData(nextProps.match.params.cate||1);
     };
     FetchData=(id)=>{
-        fetch(`/news/${id}`)
+        fetch(`/news?id=${id}`)
             .then(res=>res.json())
             .then(res=> {
                 this.setState({
@@ -25,26 +27,41 @@ class List extends Component{
     };
     render(){
         var el = this.state.data.map((v,i)=>
-            <div className="lis-item" key={i}>
+        <Link key={i} to={{pathname:`/main/${this.props.match.params.cate||1}/${v.id}`,state:{url:v.url}}}>
+            <div className="lis-item">
                 <div className="lis-img" style={{background:`url(${v.thumbnail})`}}></div>
                 <div className="lis-text">{v.title}</div>
             </div>
+        </Link>
         );
         return(
             <div>
-                {el}
-            </div>
-        )
-    }
-}
-class Center extends Component{
-    render(){
-        return(
-            <div>
-                <Route exact path="/main/:cate" component={List}/>
+                <Header/>
+                <div className="list-wrap">
+                    {el}
+                </div>
             </div>
         )
     }
 }
 
+// ================ 详情页  ==================
+class Page extends Component{
+    render(){
+        return(
+                <iframe src={this.props.location.state.url}></iframe>
+        )
+    }
+}
+// ===========  路由  =========================
+class Center extends Component{
+    render(){
+        return(
+            <div>
+                <Route exact path="/main/:cate" component={List}/>
+                <Route exact path="/main/:cate/:id" component={Page}/>
+            </div>
+        )
+    }
+}
 export default Center;
