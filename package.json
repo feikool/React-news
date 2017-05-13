@@ -1,5 +1,5 @@
 {
-  "proxy":"http://ifengnews.duapp.com",
+  "proxy":"http://localhost:3008",
   "name": "newsapp",
   "version": "0.1.0",
   "private": true,
