@@ -81,3 +81,9 @@ html,body{
 .list-wrap{
     margin-top: 5.8rem;
 }
+
+.loader-more{
+    text-align: center;
+    line-height: 3;
+    color: #3fa7ea;
+}
