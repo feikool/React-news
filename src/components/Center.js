@@ -5,10 +5,11 @@ import {Header} from './Header';
 class List extends Component{
     constructor(){
       super();
-      this.loader.bind(this);
+      // this.loader.bind(this);
     };
     state={
-        data:[]
+        data:[],
+        page:0
     };
 
     componentDidMount(){
@@ -19,7 +20,6 @@ class List extends Component{
     // 生命周期函数: 组件props发生改变时被调用, 传入的参数,为改变props后的组件对象信息
     componentWillReceiveProps(nextProps){
         this.FetchData(nextProps.match.params.cate||1);
-        this.loader(8888)
     };
     FetchData=(id)=>{
         fetch(`/news?id=${id}`)
@@ -30,20 +30,20 @@ class List extends Component{
                 });
             });
     };
-    loader=(t)=>{
-        console.log(this)
-        // fetch(`/pa?page=2&id=1`).then(res => {
-        //     return res.json();
-        // }).then((res) => {
-        //     if (res.state == "200") {
-        //        this.setState({
-        //            data:res.data
-        //        })
-        //     }else if(res.state == "400"){
-        //         console.log(40)
-        //     }
-        // })
-    }
+    loader=(id)=>{
+        this.state.page +=1;
+        fetch(`/pa?id=${id}&page=${this.state.page}`).then(res => {
+            return res.json();
+        }).then((res) => {
+            if (res.state == "200") {
+               this.setState({
+                   data:res.data
+               })
+            }else if(res.state == "400"){
+                console.log(40)
+            }
+        })
+    };
     render(){
         var el = this.state.data.map((v,i)=>
         <Link key={i} to={{pathname:`/main/${this.props.match.params.cate||1}/${v.id}`,state:{url:v.url}}}>
@@ -59,7 +59,9 @@ class List extends Component{
                 <div className="list-wrap">
                     {el}
                 </div>
-                <div className="loader-more" onClick={()=>{this.loader()}}>点击加载更多</div>
+                <div className="loader-more" onClick={()=>{
+                    let c =this.props.match.params.cate;
+                    this.loader(c)}}>点击加载更多</div>
             </div>
         )
     }
