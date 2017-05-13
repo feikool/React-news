@@ -3,13 +3,14 @@ import { Route,Link } from 'react-router-dom';
 import {Header} from './Header';
 // 列表页
 class List extends Component{
-    constructor(){
-      super();
+    constructor(props){
+      super(props);
       // this.loader.bind(this);
+        this.page =1;
+        console.log(this.props.props)
     };
     state={
         data:[],
-        page:0
     };
 
     componentDidMount(){
@@ -30,9 +31,9 @@ class List extends Component{
                 });
             });
     };
-    loader=(id)=>{
-        this.state.page +=1;
-        fetch(`/pa?id=${id}&page=${this.state.page}`).then(res => {
+    loader=(id,page)=>{
+        this.page +=1;
+        fetch(`/pa?id=${id}&page=${this.page}`).then(res => {
             return res.json();
         }).then((res) => {
             if (res.state == "200") {
@@ -48,11 +49,12 @@ class List extends Component{
         var el = this.state.data.map((v,i)=>
         <Link key={i} to={{pathname:`/main/${this.props.match.params.cate||1}/${v.id}`,state:{url:v.url}}}>
             <div className="lis-item">
-                <div className="lis-img" style={{background:`url(${v.thumbnail})`}}></div>
+                <div className="lis-img" style={{backgroundImage:`url(${v.thumbnail})`}}></div>
                 <div className="lis-text">{v.title}</div>
             </div>
         </Link>
         );
+        let page =0;
         return(
             <div>
                 <Header/>
@@ -66,7 +68,6 @@ class List extends Component{
         )
     }
 }
-
 // ================ 详情页  ==================
 class Page extends Component{
     render(){
@@ -78,8 +79,11 @@ class Page extends Component{
 // ===========  路由  =========================
 class Center extends Component{
     render(){
+        console.log(this.props.temp)
         return(
             <div>
+                <Route exact path="/" component={List}/>
+                <Route exact path="/main" component={List}/>
                 <Route exact path="/main/:cate" component={List}/>
                 <Route exact path="/main/:cate/:id" component={Page}/>
             </div>

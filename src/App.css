@@ -5,7 +5,7 @@
     text-decoration: none;
 }
 .header{
-    padding: 10px 30px;
+    padding: 10px 10px 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -63,9 +63,16 @@
 .lis-img{
     height: 90%;
     width: 30%;
+    background-size: cover;
+    background-position: center;
 }
 .lis-text{
     flex: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    margin-left: 10px;
 }
 
 iframe{

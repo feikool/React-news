@@ -2,9 +2,10 @@ import React,{ Component } from 'react';
 import {Link,Route} from 'react-router-dom';
 import Logo from '../logo.svg';
 class Back extends Component{
+
     render(){
         return(<div>
-            <Link to="#">返回</Link>
+            <Link to={this.props.url}>返回</Link>
         </div>)
     }
 }
@@ -40,7 +41,7 @@ class Top extends Component{
     render(){
         return(
             <div className="header">
-                <Back/>
+                <Back url={this.props.url}/>
                 <p>React新闻阅读</p>
                 <img src={Logo} alt=""/>
             </div>
